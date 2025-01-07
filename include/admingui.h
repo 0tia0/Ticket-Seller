@@ -7,4 +7,6 @@
 
 bool addConcert();
 
+void mainAdminMenu(currentAccount account);
+
 #endif 

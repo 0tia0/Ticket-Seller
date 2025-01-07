@@ -13,7 +13,5 @@
  * @return int la voce scelta nella listsa
  */
 int newMenu(char *question, const char *text[], int lineCount, int *count);
- 
-int login();
 
 #endif

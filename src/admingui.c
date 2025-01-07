@@ -37,6 +37,8 @@ bool addConcert(currentAccount seller)
 
     printf("\n?:");
     fgets(name, sizeof(name) / sizeof(char), stdin);
+    fflush(stdin);
+    removeNewline(name);
 
     leaveBlankLine();
     printBoxLines();
@@ -45,6 +47,8 @@ bool addConcert(currentAccount seller)
 
     printf("\n?:");
     fgets(author, sizeof(author) / sizeof(char), stdin);
+    fflush(stdin);
+    removeNewline(author);
 
     sprintf(concert.name, "%s <-> %s", name, author);
 
@@ -57,6 +61,8 @@ bool addConcert(currentAccount seller)
 
     printf("\n?:");
     fgets(concertDate, sizeof(concertDate) / sizeof(char), stdin);
+    fflush(stdin);
+    removeNewline(concertDate);
 
     concert.concertDate = convertToTimeT(concertDate);
 
@@ -69,6 +75,7 @@ bool addConcert(currentAccount seller)
 
     printf("\n?:");
     scanf("%d", &ggPrevendita);
+    fflush(stdin);
  
     ggPrevendita *= 86400;
     time_t preSale = concert.concertDate - ggPrevendita;
@@ -90,6 +97,7 @@ bool addConcert(currentAccount seller)
 
     printf("\n?:");
     scanf("%d", &concert.remaingTicket);
+    fflush(stdin);
 
     Price under, over, normal;
 
@@ -99,7 +107,8 @@ bool addConcert(currentAccount seller)
     printBoxLines();
 
     printf("\n?:");
-    scanf("%d", &normal.price);
+    scanf("%f", &normal.price);
+    fflush(stdin);
 
     normal.age = 0;
 
@@ -109,7 +118,8 @@ bool addConcert(currentAccount seller)
     printBoxLines();
 
     printf("\n?:");
-    scanf("%d", &under.price);
+    scanf("%f", &under.price);
+    fflush(stdin);
 
     leaveBlankLine();
     printBoxLines();
@@ -118,6 +128,7 @@ bool addConcert(currentAccount seller)
 
     printf("\n?:");
     scanf("%d", &under.age);
+    fflush(stdin);
 
     leaveBlankLine();
     printBoxLines();
@@ -125,7 +136,8 @@ bool addConcert(currentAccount seller)
     printBoxLines();
 
     printf("\n?:");
-    scanf("%d", &over.price);
+    scanf("%f", &over.price);
+    fflush(stdin);
 
     leaveBlankLine();
     printBoxLines();
@@ -134,10 +146,35 @@ bool addConcert(currentAccount seller)
 
     printf("\n?:");
     scanf("%d", &over.age);
+    fflush(stdin);
 
     concert.fullPrice = normal;
     concert.underPrice = under;
     concert.overPrice = over;
 
     concert.seller = seller;
+
+    concertList[AVAIBLE_CONCERT] = concert;
+    AVAIBLE_CONCERT++;
+
+    saveData(concertFile, userFile);
+}
+
+void mainAdminMenu(currentAccount account)
+{
+    const char *options[] = {
+        "Verificare il conto corrente",
+        "Creare un concerto",
+    };
+    int lineCount1 = sizeof(options) / sizeof(options[0]);
+    int count = 0;
+    switch (newMenu("Cosa desidera fare:", options, lineCount1, &count) - 1)
+    {
+    case 0:
+        //return Login();
+        break;
+    case 1:
+        addConcert(account);
+        break;
+    }
 }

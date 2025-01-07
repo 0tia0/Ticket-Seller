@@ -17,14 +17,6 @@
 
 typedef struct
 {
-    int username;
-    int type;
-    char pass[25];
-    bool auth;
-} User;
- 
-typedef struct
-{
     float price;
     int age;
 } Price;
@@ -46,6 +38,7 @@ typedef struct
     
     char CARD_NUMBER[16];
     int CVC;
+    char EXPIRE_DATE[7];
 } creditCard;
 
 typedef struct
@@ -54,9 +47,9 @@ typedef struct
     char surname[50];
 
     float avaibleMoney;
-    char IBAN[34];
+    char IBAN[27];
 
-    creditCard associatedCards[5];
+    creditCard associatedCards[1];
 } currentAccount;
 
 typedef struct
@@ -76,6 +69,19 @@ typedef struct
 
     currentAccount seller;
 } Concert;
+
+typedef struct
+{
+    currentAccount cA;
+
+    char email[30];
+    char name[30];
+    char surname[30];
+    char pass[25];
+
+    bool admin;
+    bool isValid;
+} User;
 
 /*
     Enums
@@ -101,7 +107,7 @@ enum PAYMENT_TYPE
 
 #define BOX_CHAR '-'
 #define BOX_SIDE '#'
-#define BOX_WIDTH 60
+#define BOX_WIDTH 70
 
 #define MAX_CONCERT_AVAIBLE 10
 
@@ -116,5 +122,17 @@ enum PAYMENT_TYPE
 
 extern int AVAIBLE_CONCERT;
 extern Concert concertList[MAX_CONCERT_AVAIBLE];
+
+extern int userAmount;
+extern User userList[20];
+
+extern const char *concertFile;
+extern const char *userFile;
+
+
+void saveData(const char *concertFile, const char *userFile);
+void loadData(const char *concertFile, const char *userFile);
+
+void removeNewline(char *str);
 
 #endif

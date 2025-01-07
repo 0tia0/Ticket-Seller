@@ -34,33 +34,171 @@ void printWelcomeScreen(int time)
     system("cls");
 }
 
-/**
- * @brief stampa un Menu per la richiesta delle credenziali
- *
- * @param u un puntatore ad una struttura User dove salvare i dati
- */
-void checkLoginCredentials(User *u)
+User WelcomeScreen()
 {
-    const char *login[] = {
-        "Login",
-        "",
-        "devi effetuare il login prima",
-        "di usare il sistema di ticket"};
-    int lineCount0 = sizeof(login) / sizeof(login[0]); // Calcolo del numero di righe
-    printBox(login, lineCount0);
-    Sleep(3000);
-    clearScreen();
-
     const char *options[] = {
-        "Utente",
-        "Venditore",
+        "Log In",
+        "Sign Up",
     };
     int lineCount1 = sizeof(options) / sizeof(options[0]);
     int count = 0;
-    u->type = newMenu("Esegui il login come:", options, lineCount1, &count) - 1;
+    switch (newMenu("Cosa desideri fare:", options, lineCount1, &count) - 1)
+    {
+    case 0:
+        return Login();
+        break;
+    case 1:
+        return SignUp();
+        break;
+    }
+}
 
-    // Login Credentials checking will be implemented in a next version
-    u->auth = true;
+User Login()
+{
+    fflush(stdin);
+    clearScreen();
+
+    char email[30];
+    char pass[25];
+    int i;
+
+    printBoxLines();
+    printText("Inserire le proprie credenziali di login", false, CENTER);
+    printBoxLines();
+
+    leaveBlankLine();
+    printBoxLines();
+    printText("Indirizzo email di login", false, CENTER);
+    printBoxLines();
+
+    printf("\n?:");
+    fgets(email, sizeof(email) / sizeof(char), stdin);
+    fflush(stdin);
+    removeNewline(email);
+
+    leaveBlankLine();
+    printBoxLines();
+    printText("Indirizzo la password di login", false, CENTER);
+    printBoxLines();
+
+    printf("\n?:");
+    fgets(pass, sizeof(pass) / sizeof(char), stdin);
+    fflush(stdin);
+    removeNewline(pass);
+
+    for (i = 0; i < userAmount; i++)
+    {
+        if (strcmp(userList[i].email, email) == 0)
+        {
+            if (strcmp(userList[i].pass, pass) == 0)
+            {
+                clearScreen();
+                printBoxLines();
+                printText("Login avvenuto con successo", false, CENTER);
+                printBoxLines();
+                Sleep(2000);
+                userList[i].isValid = true;
+                return userList[i];
+            }
+        }
+    }
+
+    clearScreen();
+    printBoxLines();
+    printText("Credenziali errate!", false, CENTER);
+    printBoxLines();
+    Sleep(2000);
+
+    User user = {0};
+    return user;
+}
+
+User SignUp()
+{
+    fflush(stdin);
+    clearScreen();
+
+    User user;
+    int temp;
+
+    printBoxLines();
+    printText("Benvenuto nella creazione account, compila le richieste", false, CENTER);
+    printBoxLines();
+
+    leaveBlankLine();
+    printBoxLines();
+    printText("Indirizzo email di login", false, CENTER);
+    printBoxLines();
+
+    printf("\n?:");
+    fgets(user.email, sizeof(user.email) / sizeof(char), stdin);
+    fflush(stdin);
+    removeNewline(user.email);
+
+    leaveBlankLine();
+    printBoxLines();
+    printText("Inserisci il tuo nome", false, CENTER);
+    printBoxLines();
+
+    printf("\n?:");
+    fgets(user.name, sizeof(user.name) / sizeof(char), stdin);
+    fflush(stdin);
+    removeNewline(user.name);
+
+    leaveBlankLine();
+    printBoxLines();
+    printText("Inserisci il tuo cognome", false, CENTER);
+    printBoxLines();
+
+    printf("\n?:");
+    fgets(user.surname, sizeof(user.surname) / sizeof(char), stdin);
+    fflush(stdin);
+    removeNewline(user.surname);
+
+    leaveBlankLine();
+    printBoxLines();
+    printText("Crea la password per l'account", false, CENTER);
+    printText("attenzione sara\' visibile per non commettere errori", false, CENTER);
+    printBoxLines();
+
+    printf("\n?:");
+    fgets(user.pass, sizeof(user.pass) / sizeof(char), stdin);
+    fflush(stdin);
+    removeNewline(user.pass);
+
+    leaveBlankLine();
+    printBoxLines();
+    printText("Il tuo account sara\' admin?", false, CENTER);
+    printText("se no inserisci 0, altrimenti il codice segreto", false, CENTER);
+    printBoxLines();
+
+    printf("\n?:");
+    scanf("%d", &temp);
+    fflush(stdin);
+
+    if (temp == 0)
+    {
+        user.admin = false;
+    }
+    else if (temp = 29259357)
+    {
+        user.admin = true;
+    }
+
+    user.cA = newCurrentAccount(user.name, user.surname);
+
+    clearScreen();
+    printBoxLines();
+    printText("Account creato con successo", false, CENTER);
+    printBoxLines();
+    Sleep(2000);
+
+    user.isValid = true;
+    userList[userAmount] = user;
+    userAmount++;
+    saveData(concertFile, userFile);
+
+    return Login();
 }
 
 /**
@@ -100,6 +238,7 @@ int ticketSelection(Concert *c)
 
     printf("\n?:");
     scanf("%d", &selection);
+    fflush(stdin);
 
     if (selection < 1 || selection > c->maxTicket)
     {
@@ -140,8 +279,9 @@ Ticket *compileTicketInformation(int amount, Concert c)
         printBoxLines();
 
         printf("\n?:");
+        fgets(compiledTickets[i].name, sizeof(compiledTickets[i].name)/sizeof(char), stdin);
         fflush(stdin);
-        scanf("%s", &compiledTickets[i].name);
+        removeNewline(compiledTickets[i].name);
 
         leaveBlankLine();
 
@@ -151,8 +291,9 @@ Ticket *compileTicketInformation(int amount, Concert c)
         printBoxLines();
 
         printf("\n?:");
+        fgets(compiledTickets[i].surname, sizeof(compiledTickets[i].surname)/sizeof(char), stdin);
         fflush(stdin);
-        scanf("%s", &compiledTickets[i].surname);
+        removeNewline(compiledTickets[i].surname);
 
         leaveBlankLine();
 
@@ -162,8 +303,8 @@ Ticket *compileTicketInformation(int amount, Concert c)
         printBoxLines();
 
         printf("\n?:");
-        fflush(stdin);
         scanf("%d", &compiledTickets[i].age);
+        fflush(stdin);
 
         // AGGIUNTA PREZZI
         if (compiledTickets[i].age < c.underPrice.age)
@@ -251,7 +392,7 @@ bool manageCashPayment(float ticketsPrice, Concert *c)
         char buffer[60];
         sprintf(buffer, "%s - Euro inseriti: %.2f / %.2f", "Inserisci moneta o banconota", givenMoney, ticketsPrice);
 
-        switch (newMenu(buffer, options, lineCount1, &count) -1)
+        switch (newMenu(buffer, options, lineCount1, &count) - 1)
         {
         case 0:
             givenMoney += 0.01;
@@ -297,15 +438,16 @@ bool manageCashPayment(float ticketsPrice, Concert *c)
         }
     }
 
-    if (givenMoney > ticketsPrice) {
+    if (givenMoney > ticketsPrice)
+    {
         clearScreen();
         printBoxLines();
         printText("Raccogliere presso l'erogatore il resto", false, CENTER);
         printBoxLines();
         leaveBlankLine();
-        printf("-> Resto erogato %.2f Euro", (givenMoney-ticketsPrice));
+        printf("-> Resto erogato %.2f Euro", (givenMoney - ticketsPrice));
     }
 
     leaveBlankLine();
     moveCash(c, ticketsPrice);
-} 
+}

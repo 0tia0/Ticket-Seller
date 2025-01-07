@@ -11,12 +11,10 @@
  */
 void printWelcomeScreen(int time);
 
-/**
- * @brief stampa un Menu per la richiesta delle credenziali
- * 
- * @param u un puntatore ad una struttura User dove salvare i dati
- */
-void checkLoginCredentials(User *u);
+User WelcomeScreen();
+
+User Login();
+User SignUp();
 
 /**
  * @brief stampa un Menu per la scelta del concerto
