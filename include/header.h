@@ -10,6 +10,7 @@
 #include <string.h>
 #include <windows.h>
 #include <time.h>
+#include <conio.h>
 
 /*
     Structs
@@ -49,26 +50,8 @@ typedef struct
     float avaibleMoney;
     char IBAN[27];
 
-    creditCard associatedCards[1];
+    creditCard associatedCard;
 } currentAccount;
-
-typedef struct
-{
-    time_t concertDate;
-    time_t preSale;
-
-    char name[50];
-    bool soldOut;
-
-    int maxTicket;
-    int remaingTicket;
-
-    Price fullPrice;
-    Price underPrice;
-    Price overPrice;
-
-    currentAccount seller;
-} Concert;
 
 typedef struct
 {
@@ -81,7 +64,30 @@ typedef struct
 
     bool admin;
     bool isValid;
+
+    int index;
 } User;
+
+typedef struct
+{
+    time_t concertDate;
+    time_t preSale;
+
+    char name[50];
+    bool soldOut;
+
+    int maxTicket;
+    int remaingTicket;
+    int selledTicket;
+
+    Price fullPrice;
+    Price underPrice;
+    Price overPrice;
+
+    User seller;
+
+    int index;
+} Concert;
 
 /*
     Enums
@@ -115,6 +121,8 @@ enum PAYMENT_TYPE
 #define DOWN_ARROW 80
 #define ENTER_KEY 13
 #define ESC_KEY 27
+
+#define SECRET_KEY 39
 
 /*
      Global Variables (declaration only)

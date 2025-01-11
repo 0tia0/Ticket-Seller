@@ -14,4 +14,12 @@
  */
 int newMenu(char *question, const char *text[], int lineCount, int *count);
 
+/**
+ * @brief stampa un menu "a tendina" utilizzabile che permette all'utente di scegliere un concerto (non souldout) da una lista
+ * 
+ * @param count la conta del numero di volte che si ha inserito un output, puo essere un valore passato e inizializzato pari a 0
+ * @return int la voce scelta nella listsa 
+ */
+int concertMenu(int *count);
+
 #endif

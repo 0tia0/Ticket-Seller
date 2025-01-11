@@ -11,9 +11,25 @@
  */
 void printWelcomeScreen(int time);
 
+/**
+ * @brief stampa la schermata di benvenuto chiedendo di scegliere fra login e signup
+ * 
+ * @return User utente loggato
+ */
 User WelcomeScreen();
 
+/**
+ * @brief permette di effettuare il login
+ *  
+ * @return User utente loggato
+ */
 User Login();
+
+/**
+ * @brief permette di effettuare il signup e dopo il login
+ * 
+ * @return User utente loggato
+ */
 User SignUp();
 
 /**
@@ -29,7 +45,7 @@ void selectConcert(Concert *c);
  * @param c il concerto di cui si vogliono acquistare i biglietti
  * @return int il numero di biglietti inseriti, compresi nel range messo a disposizione dal venditore
  */
-int ticketSelection(Concert *c);
+int ticketSelection(Concert c);
 
 /**
  * @brief stampa diversi Menu per permettere all'utente di compilare i dati legali dei propri biglietti
@@ -54,8 +70,54 @@ int askForPaymentType();
  */
 int askForPaymentData(int type);
 
-bool manageCashPayment(float ticketsPrice, Concert *c);
-bool manageCardPayment();
-bool manageBonificoPayment();
+/**
+ * @brief Gestisce il pagamento in contanti per l'acquisto di biglietti.
+ * 
+ * @param ticketsPrice Il prezzo totale dei biglietti da pagare.
+ * @param c La struttura Concert con le informazioni del concerto.
+ * @param u La struttura User con le informazioni dell'utente che effettua il pagamento.
+ * @return true Se il pagamento è stato completato con successo.
+ * @return false Se il pagamento è fallito.
+ */
+bool manageCashPayment(float ticketsPrice, Concert c, User u);
+
+/**
+ * @brief Gestisce il pagamento con carta di credito per l'acquisto di biglietti.
+ * 
+ * @param ticketsPrice Il prezzo totale dei biglietti da pagare.
+ * @param sellerProfit Il prezzo di guadagno in percentuale del venditore
+ * @param c La struttura Concert con le informazioni del concerto.
+ * @param u La struttura User con le informazioni dell'utente che effettua il pagamento.
+ * @return true Se il pagamento è stato completato con successo.
+ * @return false Se il pagamento è fallito.
+ */
+bool manageCardPayment(float ticketsPrice, float sellerProfit, Concert c, User u);
+
+/**
+ * @brief Gestisce il pagamento tramite bonifico bancario per l'acquisto di biglietti.
+ * 
+ * @param ticketsPrice Il prezzo totale dei biglietti da pagare.
+ * @param sellerProfit Il prezzo di guadagno in percentuale del venditore
+ * @param c La struttura Concert con le informazioni del concerto.
+ * @param u La struttura User con le informazioni dell'utente che effettua il pagamento.
+ * @return true Se il pagamento è stato completato con successo.
+ * @return false Se il pagamento è fallito.
+ */
+bool manageBonificoPayment(float ticketsPrice, float sellerProfit, Concert c, User u);
+
+/**
+ * @brief Legge i dati di una carta di credito inseriti dall'utente.
+ * 
+ * @return creditCard Una struttura creditCard contenente i dati della carta inserita.
+ */
+creditCard readCreditCardData();
+
+/**
+ * @brief Recupera le informazioni dell'account dell'utente specificato.
+ * 
+ * @param user La struttura User con i dati dell'utente di cui si vogliono ottenere le informazioni.
+ */
+void getAccountInformation(User user);
+
 
 #endif 

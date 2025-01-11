@@ -9,6 +9,12 @@ User userList[20];
 const char *concertFile = "./data/concerts.bin";
 const char *userFile = "./data/users.bin";
 
+/**
+ * @brief funzione per salvare i dati
+ * 
+ * @param concertFile file dei concerti
+ * @param userFile  file degli utenti
+ */
 void saveData(const char *concertFile, const char *userFile) {
     FILE *file = fopen(concertFile, "wb");
     if (file == NULL) {
@@ -29,6 +35,12 @@ void saveData(const char *concertFile, const char *userFile) {
     fclose(file);
 }
 
+/**
+ * @brief funzione per caricare i dati
+ * 
+ * @param concertFile file dei concerti
+ * @param userFile  file degli utenti
+ */
 void loadData(const char *concertFile, const char *userFile) {
     FILE *file = fopen(concertFile, "rb");
     if (file == NULL) {
@@ -71,6 +83,11 @@ void loadData(const char *concertFile, const char *userFile) {
     fclose(file);
 }
 
+/**
+ * @brief risolve il problema del /n dopo le letture fget
+ * 
+ * @param str la stringa da fixare
+ */
 void removeNewline(char *str) {
     size_t len = strlen(str);
     if (len > 0 && str[len - 1] == '\n') {
