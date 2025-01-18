@@ -1,3 +1,4 @@
 ./document
-./vscode
+./.vscode
 old-main.c
+./.VSCodeCounter

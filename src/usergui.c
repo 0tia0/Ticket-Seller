@@ -318,7 +318,7 @@ Ticket *compileTicketInformation(int amount, Concert c)
         leaveBlankLine();
 
         // RICHIESTA COGNOME
-        printBoxLines(ù);
+        printBoxLines();
         printText("Cognome per il biglietto", false, CENTER);
         printBoxLines();
 
