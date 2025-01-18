@@ -318,7 +318,7 @@ Ticket *compileTicketInformation(int amount, Concert c)
         leaveBlankLine();
 
         // RICHIESTA COGNOME
-        printBoxLines();
+        printBoxLines(ù);
         printText("Cognome per il biglietto", false, CENTER);
         printBoxLines();
 
@@ -407,13 +407,14 @@ int askForPaymentData(int type)
 /**
  * @brief Gestisce il pagamento in contanti per l'acquisto di biglietti.
  *
+ * @param sellerProfit Il prezzo totale dei biglietti da pagare.
  * @param ticketsPrice Il prezzo totale dei biglietti da pagare.
  * @param c La struttura Concert con le informazioni del concerto.
  * @param u La struttura User con le informazioni dell'utente che effettua il pagamento.
  * @return true Se il pagamento è stato completato con successo.
  * @return false Se il pagamento è fallito.
  */
-bool manageCashPayment(float ticketsPrice, Concert c, User user)
+bool manageCashPayment(float ticketsPrice, float sellerProfit, Concert c, User user)
 {
     const char *options[] = {
         "0.01 Euro",
@@ -502,7 +503,7 @@ bool manageCashPayment(float ticketsPrice, Concert c, User user)
     printBoxLines();
 
     leaveBlankLine();
-    moveCash(c, ticketsPrice);
+    moveCash(c, sellerProfit);
 }
 
 /**

@@ -103,7 +103,7 @@ void buyProcedure(User user)
         switch (paymentType - 1)
         {
         case CASH:
-            manageCashPayment(sellerSum, concert, user);
+            manageCashPayment(sum, sellerSum, concert, user);
             break;
         case CREDIT_CARD:
             manageCardPayment(sum, sellerSum, concert, user);

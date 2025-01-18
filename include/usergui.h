@@ -73,13 +73,14 @@ int askForPaymentData(int type);
 /**
  * @brief Gestisce il pagamento in contanti per l'acquisto di biglietti.
  * 
+ * @param sellerProfit Il prezzo totale dei biglietti da pagare.
  * @param ticketsPrice Il prezzo totale dei biglietti da pagare.
  * @param c La struttura Concert con le informazioni del concerto.
  * @param u La struttura User con le informazioni dell'utente che effettua il pagamento.
  * @return true Se il pagamento è stato completato con successo.
  * @return false Se il pagamento è fallito.
  */
-bool manageCashPayment(float ticketsPrice, Concert c, User u);
+bool manageCashPayment(float ticketsPrice, float sellerFloat, Concert c, User u);
 
 /**
  * @brief Gestisce il pagamento con carta di credito per l'acquisto di biglietti.
@@ -118,6 +119,5 @@ creditCard readCreditCardData();
  * @param user La struttura User con i dati dell'utente di cui si vogliono ottenere le informazioni.
  */
 void getAccountInformation(User user);
-
 
 #endif 
